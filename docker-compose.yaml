@@ -1,10 +1,14 @@
 version: '3'
 services:
   web:
-    build: .
-    volumes:
-      - ./app:/app
-      - ./tests:/tests
+    build:
+      context: .
+      dockerfile: Dockerfile.flask
+    container_name: flask-demo_app
+    # volumes:
+    #   # - ./app:/app
+    #   # - ./tests:/tests
+    #   - ./:/app
 
   nginx:
     build:

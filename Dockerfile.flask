@@ -13,7 +13,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install pytest
 
 # 复制应用程序到工作目录
-COPY . /apps
+COPY ./app /app
+
+RUN mkdir -p /app/tests
+COPY ./tests /app/tests
 
 # 暴露應用運行的端口
 EXPOSE 5001
