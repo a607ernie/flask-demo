@@ -1,10 +1,10 @@
 pipeline {
-    agent {
-        docker {
-            image 'jenkins/jenkins:lts'
-        }
-    }
+    agent any
 
+    environment {
+        DOCKER_HOST = 'tcp://docker:2375'
+    }
+    
     stages {
         stage('Checkout') {
             steps {
@@ -12,17 +12,7 @@ pipeline {
                 git 'https://github.com/a607ernie/flask-demo.git'
             }
         }
-        stage('Install Docker Compose') {
-            steps {
-                script {
-                    sh '''
-                    curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-                    chmod +x /usr/local/bin/docker-compose
-                    '''
-                }
-            }
-        }
-        
+
         stage('Build and Run Docker Compose') {
             steps {
                 script {
