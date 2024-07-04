@@ -2,23 +2,21 @@ pipeline {
     agent any
 
     environment {
-        // 定义Docker Compose文件路径
-        COMPOSE_FILE = 'docker-compose.yaml'
+        DOCKER_IMAGE = "flask-demo"
+        DOCKER_TAG = "latest"
     }
-    
+
     stages {
-        stage('Checkout') {
+        stage('Clone Repository') {
             steps {
-                // 从 Git 仓库克隆代码
                 git 'https://github.com/a607ernie/flask-demo.git'
             }
         }
 
-        stage('Build and Run Docker Compose') {
+        stage('Build Docker Image') {
             steps {
                 script {
-                    // 构建和运行 Docker Compose
-                    sh 'docker-compose -f $COMPOSE_FILE up -d --build'
+                    dockerImage = docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
                 }
             }
         }
@@ -26,27 +24,25 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    // 运行测试
-                    sh 'docker-compose -f $COMPOSE_FILE exec web sh -c "cd .. && cd tests && pytest"'
+                    dockerImage.inside {
+                        sh 'pytest --maxfail=1 --disable-warnings'
+                    }
                 }
             }
         }
 
-        stage('Teardown') {
-            steps {
-                script {
-                    // 停止并移除容器
-                    sh 'docker-compose -f $COMPOSE_FILE down'
-                }
-            }
-        }
+        // stage('Deploy') {
+        //     steps {
+        //         script {
+        //             dockerImage.push()
+        //         }
+        //     }
+        // }
     }
 
     post {
         always {
-            // 清理工作环境
-            sh 'docker-compose down'
-            deleteDir()
+            cleanWs()
         }
     }
 }
