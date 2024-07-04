@@ -2,7 +2,8 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HOST = 'tcp://docker:2375'
+        // 定义Docker Compose文件路径
+        COMPOSE_FILE = 'docker-compose.yaml'
     }
     
     stages {
@@ -13,20 +14,11 @@ pipeline {
             }
         }
 
-        stage('Install Docker Compose') {
-            steps {
-                sh '''
-                curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-                chmod +x /usr/local/bin/docker-compose
-                '''
-            }
-        }
-        
         stage('Build and Run Docker Compose') {
             steps {
                 script {
                     // 构建和运行 Docker Compose
-                    sh 'docker-compose up --build -d'
+                    sh 'docker-compose -f $COMPOSE_FILE up -d --build'
                 }
             }
         }
@@ -35,7 +27,7 @@ pipeline {
             steps {
                 script {
                     // 运行测试
-                    sh 'docker-compose exec web sh -c "cd .. && cd tests && pytest"'
+                    sh 'docker-compose -f $COMPOSE_FILE exec web sh -c "cd .. && cd tests && pytest"'
                 }
             }
         }
@@ -44,7 +36,7 @@ pipeline {
             steps {
                 script {
                     // 停止并移除容器
-                    sh 'docker-compose down'
+                    sh 'docker-compose -f $COMPOSE_FILE down'
                 }
             }
         }
