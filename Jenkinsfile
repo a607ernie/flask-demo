@@ -22,7 +22,7 @@ pipeline {
             steps {
                 script {
                     // 运行测试
-                    sh 'docker-compose exec web sh -c pytest'
+                    sh 'docker-compose exec -T web sh -c "pytest"'
                 }
             }
         }
