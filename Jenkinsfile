@@ -31,7 +31,7 @@ pipeline {
             steps {
                 script {
                     // 停止并移除容器
-                    sh 'docker-compose down'
+                    sh 'docker-compose down -v'
                 }
             }
         }
@@ -40,8 +40,10 @@ pipeline {
     post {
         always {
             // 清理工作环境
-            sh 'docker-compose down'
+            sh 'docker-compose down -v'
             deleteDir()
+            echo 'Cleaning up...'
+            cleanWs()
         }
     }
 }
