@@ -1,22 +1,19 @@
 pipeline {
     agent any
 
-    environment {
-        DOCKER_IMAGE = "flask-demo"
-        DOCKER_TAG = "latest"
-    }
-
     stages {
-        stage('Clone Repository') {
+        stage('Checkout') {
             steps {
+                // 从 Git 仓库克隆代码
                 git 'https://github.com/a607ernie/flask-demo.git'
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build and Run Docker Compose') {
             steps {
                 script {
-                    dockerImage = docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
+                    // 构建和运行 Docker Compose
+                    sh 'docker-compose up --build -d'
                 }
             }
         }
@@ -24,25 +21,27 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    dockerImage.inside {
-                        sh 'pytest --maxfail=1 --disable-warnings'
-                    }
+                    // 运行测试
+                    sh 'docker-compose exec web sh -c "cd .. && cd tests && pytest"'
                 }
             }
         }
 
-        // stage('Deploy') {
-        //     steps {
-        //         script {
-        //             dockerImage.push()
-        //         }
-        //     }
-        // }
+        stage('Teardown') {
+            steps {
+                script {
+                    // 停止并移除容器
+                    sh 'docker-compose down'
+                }
+            }
+        }
     }
 
     post {
         always {
-            cleanWs()
+            // 清理工作环境
+            sh 'docker-compose down'
+            deleteDir()
         }
     }
 }
