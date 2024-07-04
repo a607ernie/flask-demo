@@ -40,10 +40,8 @@ pipeline {
     post {
         always {
             // 清理工作环境
-            sh 'docker-compose down -v'
+            sh 'docker-compose down'
             deleteDir()
-            echo 'Cleaning up...'
-            cleanWs()
         }
     }
 }
