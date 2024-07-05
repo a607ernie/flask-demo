@@ -6,6 +6,7 @@ services:
     volumes:
       - ./app:/app
       - ./tests:/app/tests
+      - shared_data:/app
     command: gunicorn --workers=3 --bind=0.0.0.0:5001 wsgi:app
     environment:
       - FLASK_APP=app.py
