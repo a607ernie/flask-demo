@@ -18,11 +18,34 @@ pipeline {
             }
         }
 
-        stage('Run Tests') {
+        stage('Run Test: Create Resource') {
             steps {
                 script {
-                    // 运行测试
-                    sh 'docker-compose exec -T web sh -c pytest'
+                    sh "docker-compose exec -T web pytest tests/test_create_resource.py"
+                }
+            }
+        }
+
+        stage('Run Test: Delete Resource') {
+            steps {
+                script {
+                    sh "docker-compose exec -T web pytest tests/test_delete_resource.py"
+                }
+            }
+        }
+
+        stage('Run Test: Get Resource') {
+            steps {
+                script {
+                    sh "docker-compose exec -T web pytest tests/test_get_resource.py"
+                }
+            }
+        }
+
+        stage('Run Test: Update Resource') {
+            steps {
+                script {
+                    sh "docker-compose exec -T web pytest tests/test_update_resource.py"
                 }
             }
         }
