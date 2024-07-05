@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Clone repository') {
             steps {
-                // Cloning the repository to our workspace
+                // Cloning the Repository to our Workspace
                 checkout scm
             }
         }
@@ -12,8 +12,8 @@ pipeline {
         stage('Build and Run Docker Compose') {
             steps {
                 script {
-                    // Build and run Docker Compose
-                    docker.compose('docker-compose.yml').build().up()
+                    // 构建和运行 Docker Compose
+                    sh 'docker-compose up --build -d'
                 }
             }
         }
@@ -21,8 +21,8 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    // Run tests
-                    docker.compose('docker-compose.yml').exec(['web'], 'pytest')
+                    // 运行测试
+                    sh 'docker-compose exec -T web sh -c pytest'
                 }
             }
         }
@@ -30,8 +30,8 @@ pipeline {
         stage('Teardown') {
             steps {
                 script {
-                    // Stop and remove containers
-                    docker.compose('docker-compose.yml').down()
+                    // 停止并移除容器
+                    sh 'docker-compose down -v'
                 }
             }
         }
@@ -39,11 +39,9 @@ pipeline {
 
     post {
         always {
-            script {
-                // Clean up the work environment
-                docker.compose('docker-compose.yml').down()
-                deleteDir()
-            }
+            // 清理工作环境
+            sh 'docker-compose down'
+            deleteDir()
         }
     }
 }
