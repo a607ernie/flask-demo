@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         SHARED_DATA_DIR = '/shared_data'
-        GIT_REPO = 'https://github.com/your-repo/your-project.git'
+        GIT_REPO = 'https://github.com/a607ernie/flask-demo.git'
     }
 
     stages {
