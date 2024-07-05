@@ -6,8 +6,6 @@ services:
     volumes:
       - ./app:/app
       - ./tests:/app/tests
-    environment:
-      - FLASK_APP=app.py
 
   nginx:
     build:

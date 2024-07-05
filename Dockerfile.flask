@@ -14,5 +14,8 @@ RUN pip install pytest
 # 暴露應用運行的端口
 EXPOSE 5001
 
+# Define environment variable
+ENV FLASK_APP=app.py
+
 # 定義運行命令
 CMD ["gunicorn", "--workers=3", "--bind=0.0.0.0:5001", "wsgi:app"]
