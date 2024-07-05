@@ -6,7 +6,12 @@ services:
     volumes:
       - ./app:/app
       - ./tests:/app/tests
-
+    command: gunicorn --workers=3 --bind=0.0.0.0:5001 wsgi:app
+    environment:
+      - FLASK_APP=app.py
+    expose:
+      - "5001"
+      
   nginx:
     build:
       context: .
