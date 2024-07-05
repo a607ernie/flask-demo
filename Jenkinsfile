@@ -6,6 +6,10 @@ pipeline {
             steps {
                 // Cloning the Repository to our Workspace
                 checkout scm
+                // 输出当前目录内容，检查文件和路径是否正确
+                sh 'ls -la'
+                sh 'ls -la app'
+                sh 'ls -la tests'
             }
         }
 
