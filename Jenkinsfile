@@ -12,7 +12,7 @@ pipeline {
             steps {
                 script {
                     // 清理共享卷中的旧数据
-                    sh "rm -rf ${SHARED_DATA_DIR}/*"
+                    sh "rm -rf ${SHARED_DATA_DIR}/* || true"
                 }
             }
         }
