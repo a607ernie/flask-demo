@@ -4,8 +4,8 @@ services:
     image: a607ernie/flask-demo:latest
     container_name: flask-demo_app
     volumes:
-      - ./app:/app
-      - ./tests:/app/tests
+      # - ./app:/app
+      # - ./tests:/app/tests
       - shared_data:/app
     command: gunicorn --workers=3 --bind=0.0.0.0:5001 wsgi:app
     environment:
