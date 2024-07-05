@@ -21,7 +21,7 @@ pipeline {
         stage('Run Test: Create Resource') {
             steps {
                 script {
-                    sh "docker-compose exec -T web pytest tests/test_create_resource.py"
+                    sh "docker-compose exec -T web pytest tests/test_create_resource.py || (docker-compose logs web && exit 1)"
                 }
             }
         }
