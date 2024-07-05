@@ -7,12 +7,19 @@ pipeline {
     }
 
     stages {
-        stage('Clone Repository') {
+
+        stage('Prepare Environment') {
             steps {
                 script {
                     // 清理共享卷中的旧数据
                     sh "rm -rf ${SHARED_DATA_DIR}/*"
-                    
+                }
+            }
+        }
+
+        stage('Clone Repository') {
+            steps {
+                script {
                     // 克隆新的代码到共享卷中
                     sh "git clone ${GIT_REPO} ${SHARED_DATA_DIR}"
                     
