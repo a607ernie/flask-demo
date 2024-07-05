@@ -1,31 +1,12 @@
 pipeline {
     agent any
 
-    environment {
-        SHARED_DATA_DIR = '/shared_data'
-        GIT_REPO = 'https://github.com/a607ernie/flask-demo.git'
-    }
-
     stages {
 
-        stage('Prepare Environment') {
+        stage('Clone repository') {
             steps {
-                script {
-                    // 清理共享卷中的旧数据
-                    sh "rm -rf ${SHARED_DATA_DIR}/* || true"
-                }
-            }
-        }
-
-        stage('Clone Repository') {
-            steps {
-                script {
-                    // 克隆新的代码到共享卷中
-                    sh "git clone ${GIT_REPO} ${SHARED_DATA_DIR}"
-                    
-                    // Optional: 如果需要安装依赖，可以在这里进行
-                    // sh "cd ${SHARED_DATA_DIR} && pip install -r requirements.txt"
-                }
+                // Cloning the Repository to our Workspace
+                checkout scm
             }
         }
 

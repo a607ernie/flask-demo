@@ -11,6 +11,12 @@ COPY ./app/requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install pytest
 
+# 复制应用程序到工作目录
+COPY ./app /app
+
+RUN mkdir -p /app/tests
+COPY ./tests /app/tests
+
 # 暴露應用運行的端口
 EXPOSE 5001
 
@@ -18,4 +24,4 @@ EXPOSE 5001
 ENV FLASK_APP=app.py
 
 # 定義運行命令
-# CMD ["gunicorn", "--workers=3", "--bind=0.0.0.0:5001", "wsgi:app"]
+CMD ["gunicorn", "--workers=3", "--bind=0.0.0.0:5001", "wsgi:app"]
