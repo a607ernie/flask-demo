@@ -66,6 +66,7 @@ pipeline {
                     sh 'bash deploy.sh'
                 }
             }
+        }
     }
 
     post {
