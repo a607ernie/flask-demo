@@ -59,6 +59,13 @@ pipeline {
                 }
             }
         }
+        stage('Deploy') {
+            steps {
+                script {
+                    // 在本地部署
+                    sh 'bash deploy.sh'
+                }
+            }
     }
 
     post {
