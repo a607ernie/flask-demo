@@ -74,7 +74,7 @@ pipeline {
                 script {
                     // 在本地部署
                     sh """#!/bin/bash
-                    ansible-playbook -i /ansible_demo/inventory.ini /ansible_demo/deploy.yml --extra-vars "selected_repo=hello_git"
+                    ansible-playbook -i /ansible_demo/inventory.ini /ansible_demo/deploy.yml --extra-vars "selected_repo=flask-demo"
                     """
                 }
             }
