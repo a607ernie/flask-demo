@@ -69,7 +69,7 @@ pipeline {
                 }
             }
         }
-        tage('Ansible Deploy') {
+        stage('Ansible Deploy') {
             steps {
                 script {
                     // 在本地部署
