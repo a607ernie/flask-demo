@@ -65,7 +65,6 @@ pipeline {
                     // 在本地部署
                     sh """#!/bin/bash
                     ansible -i /ansible_demo/inventory.ini all -m ping
-                    // ansible-playbook -i ansible_demo/inventory.ini ansible_demo/deploy.yml --extra-vars "selected_repo=hello_git"
                     """
                 }
             }
