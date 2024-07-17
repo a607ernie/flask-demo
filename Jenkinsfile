@@ -59,12 +59,22 @@ pipeline {
                 }
             }
         }
-        stage('Deploy') {
+        stage('Ansible SSH') {
             steps {
                 script {
                     // 在本地部署
                     sh """#!/bin/bash
                     ansible -i /ansible_demo/inventory.ini all -m ping
+                    """
+                }
+            }
+        }
+        tage('Ansible Deploy') {
+            steps {
+                script {
+                    // 在本地部署
+                    sh """#!/bin/bash
+                    ansible-playbook -i /ansible_demo/inventory.ini /ansible_demo/deploy.yml --extra-vars "selected_repo=hello_git"
                     """
                 }
             }
