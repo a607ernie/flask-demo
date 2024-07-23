@@ -1,18 +1,7 @@
----
 kind: pipeline
 name: default
 
-# steps:
-# - name: test
-#   image: docker:dind
-#   volumes:
-#   - name: dockersock
-#     path: /var/run
-#   commands:
-#   - sleep 5 # give docker enough time to start
-#   - docker ps -a
-
-services:
+steps:
 - name: run
   image: docker/compose:1.25.0-rc2-alpine
   commands:
@@ -20,8 +9,6 @@ services:
   volumes:
     - name: dockersock
       path: /var/run/docker.sock
-  depends_on:
-    - build
 
 volumes:
 - name: dockersock
