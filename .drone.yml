@@ -3,7 +3,7 @@ name: default
 
 steps:
 - name: run
-  image: docker/compose:1.25.0-rc2-alpine
+  image: docker/compose:1.29.1
   privileged: true
   commands:
     - docker-compose -f docker-compose.yaml up -d
@@ -13,4 +13,3 @@ steps:
 
 volumes:
 - name: dockersock
-  temp: {}
