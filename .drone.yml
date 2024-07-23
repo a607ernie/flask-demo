@@ -1,34 +1,78 @@
 kind: pipeline
 type: docker
-name: dev
+name: default
 
 steps:
-  - name: build-and-run
-    image: docker/compose:1.29.2
-    environment:
-      COMPOSE_FILE: docker-compose.yaml
-    commands:
-      - docker-compose up --build -d
+- name: clone
+  image: plugins/git
+  settings:
+    tags: true
 
-  - name: run-tests
-    image: docker/compose:1.29.2
-    commands:
-      - docker-compose exec -T web pytest tests/test_create_resource.py || (docker-compose logs web && exit 1)
-      - docker-compose exec -T web pytest tests/test_delete_resource.py
-      - docker-compose exec -T web pytest tests/test_get_resource.py
-      - docker-compose exec -T web pytest tests/test_update_resource.py
+- name: build-and-run-docker-compose
+  image: docker:19.03.12
+  volumes:
+  - name: docker
+    path: /var/run/docker.sock
+  commands:
+    - docker-compose up --build -d
 
-  - name: teardown
-    image: docker/compose:1.29.2
-    commands:
-      - docker-compose down -v
+- name: run-test-create-resource
+  image: docker:19.03.12
+  volumes:
+  - name: docker
+    path: /var/run/docker.sock
+  commands:
+    - docker-compose exec -T web pytest tests/test_create_resource.py || (docker-compose logs web && exit 1)
 
-services:
-  docker:
-    image: docker:dind
-    privileged: true
+- name: run-test-delete-resource
+  image: docker:19.03.12
+  volumes:
+  - name: docker
+    path: /var/run/docker.sock
+  commands:
+    - docker-compose exec -T web pytest tests/test_delete_resource.py
+
+- name: run-test-get-resource
+  image: docker:19.03.12
+  volumes:
+  - name: docker
+    path: /var/run/docker.sock
+  commands:
+    - docker-compose exec -T web pytest tests/test_get_resource.py
+
+- name: run-test-update-resource
+  image: docker:19.03.12
+  volumes:
+  - name: docker
+    path: /var/run/docker.sock
+  commands:
+    - docker-compose exec -T web pytest tests/test_update_resource.py
+
+- name: teardown
+  image: docker:19.03.12
+  volumes:
+  - name: docker
+    path: /var/run/docker.sock
+  commands:
+    - docker-compose down -v
+
+# - name: ansible-ssh
+#   image: williamyeh/ansible:alpine3
+#   commands:
+#     - ansible -i /ansible_demo/inventory.ini all -m ping
+
+# - name: ansible-deploy
+#   image: williamyeh/ansible:alpine3
+#   commands:
+#     - ansible-playbook -i /ansible_demo/inventory.ini /ansible_demo/deploy.yml --extra-vars "selected_repo=flask-demo"
+
+volumes:
+- name: docker
+  host:
+    path: /var/run/docker.sock
 
 trigger:
   event:
     - push
     - pull_request
+
