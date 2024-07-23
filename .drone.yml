@@ -4,6 +4,7 @@ name: default
 steps:
 - name: run
   image: docker/compose:1.25.0-rc2-alpine
+  privileged: true
   commands:
     - docker-compose -f docker-compose.yaml up -d
   volumes:
