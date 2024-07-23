@@ -8,7 +8,7 @@ steps:
   settings:
     tags: true
 
-- name: build-and-run-docker-compose
+- name: build_and_run_docker_compose
   image: docker:19.03.12
   volumes:
   - name: docker
@@ -16,7 +16,7 @@ steps:
   commands:
     - docker-compose up --build -d
 
-- name: run-test-create-resource
+- name: run_test_create_resource
   image: docker:19.03.12
   volumes:
   - name: docker
@@ -24,7 +24,7 @@ steps:
   commands:
     - docker-compose exec -T web pytest tests/test_create_resource.py || (docker-compose logs web && exit 1)
 
-- name: run-test-delete-resource
+- name: run_test_delete_resource
   image: docker:19.03.12
   volumes:
   - name: docker
@@ -32,7 +32,7 @@ steps:
   commands:
     - docker-compose exec -T web pytest tests/test_delete_resource.py
 
-- name: run-test-get-resource
+- name: run_test_get_resource
   image: docker:19.03.12
   volumes:
   - name: docker
@@ -40,7 +40,7 @@ steps:
   commands:
     - docker-compose exec -T web pytest tests/test_get_resource.py
 
-- name: run-test-update-resource
+- name: run_test_update_resource
   image: docker:19.03.12
   volumes:
   - name: docker
@@ -56,12 +56,12 @@ steps:
   commands:
     - docker-compose down -v
 
-# - name: ansible-ssh
+# - name: ansible_ssh
 #   image: williamyeh/ansible:alpine3
 #   commands:
 #     - ansible -i /ansible_demo/inventory.ini all -m ping
 
-# - name: ansible-deploy
+# - name: ansible_deploy
 #   image: williamyeh/ansible:alpine3
 #   commands:
 #     - ansible-playbook -i /ansible_demo/inventory.ini /ansible_demo/deploy.yml --extra-vars "selected_repo=flask-demo"
@@ -75,4 +75,3 @@ trigger:
   event:
     - push
     - pull_request
-
