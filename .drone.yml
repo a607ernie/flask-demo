@@ -68,7 +68,7 @@ steps:
     password:
       from_secret: harbor_password
   commands:
-    - echo $harbor_password | docker login -u $harbor_username --password-stdin ${harbor_registry}
+    - echo ${harbor_password} | docker login -u harbor_username --password-stdin ${harbor_registry}
     - docker build -t ${harbor_registry}/flask-demo/flask .
     - docker push ${harbor_registry}/flask-demo/flask
   when:
