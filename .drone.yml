@@ -59,7 +59,13 @@ steps:
   
 - name: debug
   image: alpine
+  environment:
+    HARBOR_REGISTRY_SECRET:
+      from_secret: nginx_repo
   commands:
+  - echo $HARBOR_REGISTRY_SECRET
+  - echo ${HARBOR_REGISTRY_SECRET}
+  - echo HARBOR_REGISTRY_SECRET
   - env
 
 - name: build_and_push
