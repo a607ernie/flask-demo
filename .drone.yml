@@ -57,6 +57,14 @@ steps:
     - name: docker_socket
       path: /var/run/docker.sock
 
+- name: ls
+  image: alpine
+  commands:
+  - echo ls
+  - echo harbor_username
+  - echo ${harbor_username}
+  - echo $harbor_username
+
 - name: build_and_push
   image: plugins/docker
   settings:
