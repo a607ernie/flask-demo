@@ -82,16 +82,16 @@ steps:
   image: plugins/docker
   settings:
     dockerfile: Dockerfile.nginx
-    insecure: false
+    insecure: true
     tags: latest
     repo: 
       from_secret: nginx_repo
     registry: 
-      from_secret: $harbor_registry
+      from_secret: harbor_registry
     username:
-      from_secret: $harbor_username
+      from_secret: harbor_username
     password:
-      from_secret: $harbor_password
+      from_secret: harbor_password
 
 
       
