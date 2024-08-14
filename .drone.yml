@@ -67,7 +67,9 @@ steps:
   settings:
     dockerfile: Dockerfile.flask
     insecure : true
-    tags: latest
+    tags:
+      - latest
+      - ${DRONE_COMMIT}
     repo: 
       from_secret: $harbor_registry:8081/flask-demo/flask
     registry: 
