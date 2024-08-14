@@ -12,11 +12,38 @@ steps:
     - name: docker_socket
       path: /var/run/docker.sock
 
-- name: test
+- name: test_create_resource
+  image: docker/compose:1.29.1
+  privileged: true
+  commands:
+    - docker-compose exec -T web pytest tests/test_create_resource.py || (docker-compose logs web && exit 1)
+  volumes:
+    - name: docker_socket
+      path: /var/run/docker.sock
+
+- name: test_delete_resource
   image: docker/compose:1.29.1
   privileged: true
   commands:
     - docker-compose exec -T web pytest tests/test_delete_resource.py
+  volumes:
+    - name: docker_socket
+      path: /var/run/docker.sock
+
+- name: test_get_resource
+  image: docker/compose:1.29.1
+  privileged: true
+  commands:
+    - docker-compose exec -T web pytest tests/test_get_resource.py
+  volumes:
+    - name: docker_socket
+      path: /var/run/docker.sock
+
+- name: test_update_resource
+  image: docker/compose:1.29.1
+  privileged: true
+  commands:
+    - docker-compose exec -T web pytest tests/test_update_resource.py
   volumes:
     - name: docker_socket
       path: /var/run/docker.sock
