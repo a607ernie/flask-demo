@@ -77,8 +77,7 @@ steps:
     dockerfile: Dockerfile.nginx
     insecure: true
     tags: latest
-    repo: 
-      from_secret: REPO_NAME
+    repo: ${REPO_NAME}
     registry: 
       from_secret: harbor_registry
     username:
