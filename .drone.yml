@@ -57,25 +57,9 @@ steps:
     - name: docker_socket
       path: /var/run/docker.sock
 
-- name: debug
-  image: alpine
-  environment:
-    HARBOR_REGISTRY_SECRET:
-      from_secret: nginx_repo
-    REPO_NAME: ${HARBOR_REGISTRY_SECRET}/flask-demo/nginx
-
-  commands:
-  - echo $REPO_NAME
-  - echo $HARBOR_REGISTRY_SECRET
-  - env
 
 - name: build_and_push
   image: plugins/docker
-  environment:
-    HARBOR_REGISTRY:
-      from_secret: harbor_registry
-    REPO_NAME: 
-      from_secret: nginx_repo
 
   settings:
     dockerfile: Dockerfile.nginx
