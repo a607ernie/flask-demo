@@ -87,8 +87,9 @@ steps:
   settings:
     dockerfile: Dockerfile.nginx
     insecure: true
-    # tags: latest
-    repo: $HARBOR_REPO
+    tags: latest
+    repo: 
+      from_secret: nginx_repo
     registry: 
       from_secret: $harbor_registry
     username:
