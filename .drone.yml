@@ -56,7 +56,19 @@ steps:
   volumes:
     - name: docker_socket
       path: /var/run/docker.sock
-  
+
+- name: set_variables
+  image: alpine
+  environment:
+    HARBOR_REGISTRY_SECRET:
+      from_secret: harbor_registry
+  commands:
+    - apk add --no-cache gettext
+    - export HARBOR_REPO="${HARBOR_REGISTRY_SECRET}:8081/flask-demo/nginx"
+    - export HARBOR_REGISTRY="${HARBOR_REGISTRY_SECRET}:8081"
+    - echo "HARBOR_REPO=$HARBOR_REPO" >> /drone/src/variables.env
+    - echo "HARBOR_REGISTRY=$HARBOR_REGISTRY" >> /drone/src/variables.env
+
 - name: debug
   image: alpine
   environment:
