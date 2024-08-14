@@ -74,9 +74,11 @@ steps:
   image: plugins/docker
   settings:
     dockerfile: Dockerfile.flask
-    repo: $harbor_registry:8081/flask-demo/flask
+    repo: 
+      from_secret: $harbor_registry:8081/flask-demo/flask
     tags: latest
-    registry: $harbor_registry:8081
+    registry: 
+      from_secret: $harbor_registry:8081
     username:
       from_secret: $harbor_username
     password:
