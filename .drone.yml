@@ -56,18 +56,6 @@ steps:
   volumes:
     - name: docker_socket
       path: /var/run/docker.sock
-
-- name: ls
-  image: alpine
-  environment:
-    harbor_username:
-      from_secret: harbor_username  # 确保 secret 名称正确
-  commands:
-  - echo ls
-  - echo harbor_username
-  - echo ${harbor_username}
-  - echo $harbor_username
-  # - env
   
 
 - name: build_and_push
@@ -76,7 +64,6 @@ steps:
     dockerfile: Dockerfile.flask
     repo: 
       from_secret: $harbor_registry:8081/flask-demo/flask
-    tags: v1.${DRONE_BUILD_NUMBER}
     registry: 
       from_secret: $harbor_registry:8081
     username:
