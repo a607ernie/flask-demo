@@ -62,10 +62,9 @@ steps:
   environment:
     HARBOR_REGISTRY_SECRET:
       from_secret: nginx_repo
-    REPO_NAME: ${HARBOR_REGISTRY}/flask-demo/nginx
+    REPO_NAME: $HARBOR_REGISTRY_SECRET/flask-demo/nginx
 
   commands:
-  - echo ${REPO_NAME}
   - echo $REPO_NAME
   - echo $HARBOR_REGISTRY_SECRET
   - env
@@ -82,7 +81,7 @@ steps:
     dockerfile: Dockerfile.nginx
     insecure: true
     tags: latest
-    repo: ${REPO_NAME}
+    repo: $REPO_NAME
     registry: 
       from_secret: harbor_registry
     username:
