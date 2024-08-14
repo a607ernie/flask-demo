@@ -80,10 +80,6 @@ steps:
 
 - name: build_and_push
   image: plugins/docker
-  environment:
-    HARBOR_REPO:
-      from_secret: nginx_repo
-
   settings:
     dockerfile: Dockerfile.nginx
     insecure: true
