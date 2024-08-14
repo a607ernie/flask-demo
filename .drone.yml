@@ -64,8 +64,8 @@ steps:
       from_secret: harbor_registry
   commands:
     - apk add --no-cache gettext
-    - export HARBOR_REPO="${HARBOR_REGISTRY_SECRET}:8081/flask-demo/nginx"
-    - export HARBOR_REGISTRY="${HARBOR_REGISTRY_SECRET}:8081"
+    - export HARBOR_REPO="$HARBOR_REGISTRY_SECRET:8081/flask-demo/nginx"
+    - export HARBOR_REGISTRY="$HARBOR_REGISTRY_SECRET:8081"
     - echo "HARBOR_REPO=$HARBOR_REPO" >> /drone/src/variables.env
     - echo "HARBOR_REGISTRY=$HARBOR_REGISTRY" >> /drone/src/variables.env
 
@@ -80,12 +80,15 @@ steps:
 
 - name: build_and_push
   image: plugins/docker
+  environment:
+    HARBOR_REPO:
+      from_secret: nginx_repo
+
   settings:
     dockerfile: Dockerfile.nginx
     insecure: true
     # tags: latest
-    repo: 
-      from_secret: $nginx_repo
+    repo: $HARBOR_REPO
     registry: 
       from_secret: $harbor_registry
     username:
