@@ -62,17 +62,6 @@ steps:
   commands:
   - env
 
-- name: set_variables
-  image: drone/envsubst
-  environment:
-    HARBOR_REGISTRY_SECRET:
-      from_secret: harbor_registry
-  commands:
-    - export HARBOR_REPO="${HARBOR_REGISTRY_SECRET}:8081/flask-demo/nginx"
-    - export HARBOR_REGISTRY="${HARBOR_REGISTRY_SECRET}:8081"
-    - echo "HARBOR_REPO=$HARBOR_REPO" >> /drone/src/variables.env
-    - echo "HARBOR_REGISTRY=$HARBOR_REGISTRY" >> /drone/src/variables.env
-
 - name: build_and_push
   image: plugins/docker
   settings:
@@ -80,7 +69,7 @@ steps:
     insecure: true
     tags: latest
     repo: 
-      from_secret: harbor_repo
+      from_secret: $nginx_repo
     registry: 
       from_secret: $harbor_registry
     username:
