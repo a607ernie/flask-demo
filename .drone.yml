@@ -62,7 +62,11 @@ steps:
   environment:
     HARBOR_REGISTRY_SECRET:
       from_secret: nginx_repo
+    REPO_NAME: ${HARBOR_REGISTRY}/flask-demo/nginx
+
   commands:
+  - echo ${REPO_NAME}
+  - echo $REPO_NAME
   - echo $HARBOR_REGISTRY_SECRET
   - env
 
@@ -71,7 +75,8 @@ steps:
   environment:
     HARBOR_REGISTRY:
       from_secret: harbor_registry
-    REPO_NAME: ${HARBOR_REGISTRY}/flask-demo/nginx
+    REPO_NAME: 
+      from_secret: nginx_repo
 
   settings:
     dockerfile: Dockerfile.nginx
