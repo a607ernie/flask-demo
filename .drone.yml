@@ -67,20 +67,20 @@ steps:
   - echo harbor_username
   - echo ${harbor_username}
   - echo $harbor_username
-  - env
+  # - env
   
 
 - name: build_and_push
   image: plugins/docker
   settings:
     dockerfile: Dockerfile.flask
-    repo: harbor_registry:8081/flask-demo/flask
+    repo: $harbor_registry:8081/flask-demo/flask
     tags: latest
-    registry: harbor_registry:8081
+    registry: $harbor_registry:8081
     username:
-      from_secret: harbor_username
+      from_secret: $harbor_username
     password:
-      from_secret: harbor_password
+      from_secret: $harbor_password
   when:
     status:
       - success
