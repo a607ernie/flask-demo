@@ -59,11 +59,16 @@ steps:
 
 - name: ls
   image: alpine
+  environment:
+    harbor_username:
+      from_secret: harbor_username  # 确保 secret 名称正确
   commands:
   - echo ls
   - echo harbor_username
   - echo ${harbor_username}
   - echo $harbor_username
+  - env
+  
 
 - name: build_and_push
   image: plugins/docker
