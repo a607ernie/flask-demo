@@ -21,6 +21,15 @@ steps:
     - name: docker_socket
       path: /var/run/docker.sock
 
+- name: cleanup
+  image: docker/compose:1.29.1
+  privileged: true
+  commands:
+    - docker-compose -f docker-compose.yaml down -v
+  volumes:
+    - name: docker_socket
+      path: /var/run/docker.sock
+
 volumes:
   - name: docker_socket
     host:
