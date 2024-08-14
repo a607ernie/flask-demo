@@ -12,6 +12,15 @@ steps:
     - name: docker_socket
       path: /var/run/docker.sock
 
+- name: test
+  image: docker/compose:1.29.1
+  privileged: true
+  commands:
+    - docker-compose exec -T web pytest tests/test_delete_resource.py
+  volumes:
+    - name: docker_socket
+      path: /var/run/docker.sock
+
 volumes:
   - name: docker_socket
     host:
