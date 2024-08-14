@@ -60,13 +60,13 @@ steps:
 - name: build_and_push
   image: plugins/docker
   settings:
-    repo: harbor_registry/flask-demo/flask
+    repo: ${harbor_registry}/flask-demo/flask
     tags: latest
-    registry: harbor_registry
+    registry: ${harbor_registry}
     username:
-      from_secret: harbor_username
+      from_secret: ${harbor_username}
     password:
-      from_secret: harbor_password
+      from_secret: ${harbor_password}
   when:
     status:
       - success
