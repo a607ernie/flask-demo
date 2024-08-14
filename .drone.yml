@@ -82,7 +82,7 @@ steps:
   image: plugins/docker
   settings:
     dockerfile: Dockerfile.nginx
-    insecure: true
+    insecure: false
     tags: latest
     repo: 
       from_secret: nginx_repo
