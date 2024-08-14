@@ -70,9 +70,8 @@ steps:
   settings:
     dockerfile: Dockerfile.nginx
     insecure: true
-    tags:
-      - latest
-    repo: ${HARBOR_REGISTRY}/flask-demo/nginx
+    tags: latest
+    repo: $HARBOR_REGISTRY/flask-demo/nginx
     registry: 
       from_secret: $harbor_registry
     username:
