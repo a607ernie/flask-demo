@@ -57,6 +57,20 @@ steps:
     - name: docker_socket
       path: /var/run/docker.sock
 
+- name: build_and_push
+  image: plugins/docker
+  environment:
+    - $(cat .env | xargs)
+  settings:
+    repo: $HARBOR_REGISTRY/flask-demo/flask
+    tags: latest
+    registry: $HARBOR_REGISTRY
+    username: $HARBOR_USERNAME
+    password: $HARBOR_PASSWORD
+  when:
+    status:
+      - success
+      
 volumes:
   - name: docker_socket
     host:
