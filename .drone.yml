@@ -76,9 +76,6 @@ steps:
       from_secret: $harbor_username
     password:
       from_secret: $harbor_password
-  volumes:
-  - name: docker
-    path: /var/run/docker.sock
   when:
     status:
       - success
