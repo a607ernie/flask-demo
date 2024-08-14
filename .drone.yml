@@ -69,7 +69,6 @@ steps:
     insecure : true
     tags:
       - latest
-      - ${DRONE_COMMIT}
     repo: 
       from_secret: $harbor_registry:8081/flask-demo/flask
     registry: 
