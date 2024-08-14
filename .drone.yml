@@ -75,8 +75,8 @@ steps:
   settings:
     dockerfile: Dockerfile.flask
     repo: 
-      from_secret: $harbor_registry:8081/flask-demo/flask:v1.${DRONE_BUILD_NUMBER}
-    tags: latest
+      from_secret: $harbor_registry:8081/flask-demo/flask
+    tags: v1.${DRONE_BUILD_NUMBER}
     registry: 
       from_secret: $harbor_registry:8081
     username:
