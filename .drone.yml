@@ -64,15 +64,17 @@ steps:
 
 - name: build_and_push
   image: plugins/docker
+  environment:
+    HARBOR_REGISTRY:
+      from_secret: harbor_registry
   settings:
     dockerfile: Dockerfile.nginx
-    insecure : true
+    insecure: true
     tags:
       - latest
-    repo: 
-      from_secret: $harbor_registry:8081/flask-demo/nginx
+    repo: ${HARBOR_REGISTRY}/flask-demo/nginx
     registry: 
-      from_secret: $harbor_registry:8081
+      from_secret: $harbor_registry
     username:
       from_secret: $harbor_username
     password:
