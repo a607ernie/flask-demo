@@ -68,14 +68,12 @@ steps:
 
 - name: build_and_push
   image: plugins/docker
-  environment:
-    HARBOR_REGISTRY_SECRET:
-      from_secret: nginx_repo
   settings:
     dockerfile: Dockerfile.nginx
     insecure: true
-    tags: latest
-    repo: $HARBOR_REGISTRY_SECRET
+    # tags: latest
+    repo: 
+      from_secret: $nginx_repo
     registry: 
       from_secret: $harbor_registry
     username:
