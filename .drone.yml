@@ -7,7 +7,7 @@ steps:
   image: docker/compose:1.29.1
   privileged: true
   commands:
-    - docker-compose -f docker-compose.yaml up -d
+    - docker compose -f docker-compose.yaml up -d
   volumes:
     - name: docker_socket
       path: /var/run/docker.sock
@@ -16,7 +16,7 @@ steps:
   image: docker/compose:1.29.1
   privileged: true
   commands:
-    - docker-compose exec -T web pytest tests/test_create_resource.py || (docker-compose logs web && exit 1)
+    - docker compose exec -T web pytest tests/test_create_resource.py || (docker compose logs web && exit 1)
   volumes:
     - name: docker_socket
       path: /var/run/docker.sock
@@ -25,7 +25,7 @@ steps:
   image: docker/compose:1.29.1
   privileged: true
   commands:
-    - docker-compose exec -T web pytest tests/test_delete_resource.py
+    - docker compose exec -T web pytest tests/test_delete_resource.py
   volumes:
     - name: docker_socket
       path: /var/run/docker.sock
@@ -43,7 +43,7 @@ steps:
   image: docker/compose:1.29.1
   privileged: true
   commands:
-    - docker-compose exec -T web pytest tests/test_update_resource.py
+    - docker compose exec -T web pytest tests/test_update_resource.py
   volumes:
     - name: docker_socket
       path: /var/run/docker.sock
@@ -52,7 +52,7 @@ steps:
   image: docker/compose:1.29.1
   privileged: true
   commands:
-    - docker-compose -f docker-compose.yaml down -v
+    - docker compose -f docker-compose.yaml down -v
   volumes:
     - name: docker_socket
       path: /var/run/docker.sock
